@@ -14,10 +14,10 @@ import {
 } from 'react-native';
 
 import Card from './Card';
-import Header from '../Header/Header';
-import NavigationActions from '../../NavigationActions';
-import addNavigationHelpers from '../../addNavigationHelpers';
-import SceneView from '../SceneView';
+import Header from './Header/Header';
+import NavigationActions from '../NavigationActions';
+import addNavigationHelpers from '../addNavigationHelpers';
+import SceneView from './SceneView';
 
 import type {
   NavigationAction,
