@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 import CardStack from './CardStack';
 import CardStackStyleInterpolator from './CardStackStyleInterpolator';
-import Transitioner from '../Transitioner';
+import Transitioner from './Transitioner';
 import addNavigationHelpers from '../../addNavigationHelpers';
 import TransitionConfigs from './TransitionConfigs';
 import getScreenForRouteName from '../../routers/getScreenForRouteName';
