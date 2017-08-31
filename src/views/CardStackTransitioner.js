@@ -2,11 +2,14 @@
 
 import React, { Component } from 'react';
 import { NativeModules } from 'react-native';
+import _ from 'lodash';
 
 import CardStack from './CardStack';
 import CardStackStyleInterpolator from './CardStackStyleInterpolator';
-import Transitioner from './Transitioner';
+import Transitioner from '../Transitioner';
+import addNavigationHelpers from '../../addNavigationHelpers';
 import TransitionConfigs from './TransitionConfigs';
+import getScreenForRouteName from '../../routers/getScreenForRouteName';
 
 import type {
   NavigationAction,
@@ -19,7 +22,7 @@ import type {
   HeaderMode,
   ViewStyleProp,
   TransitionConfig,
-} from '../TypeDefinition';
+} from '../../TypeDefinition';
 
 const NativeAnimatedModule =
   NativeModules && NativeModules.NativeAnimatedModule;
@@ -96,6 +99,23 @@ class CardStackTransitioner extends Component<DefaultProps, Props, void> {
     return transitionSpec;
   };
 
+  _getMode() {
+    const { navigation, mode, router } = this.props;
+    let screenOptions;
+    if (
+      this.props.navigation.state.routes &&
+      this.props.navigation.state.routes[1]
+    ) {
+      router.getScreenOptions(
+        addNavigationHelpers({
+          state: this.props.navigation.state.routes[1],
+          dispatch: this.props.navigation.dispatch,
+        })
+      );
+    }
+    return screenOptions && screenOptions.mode ? screenOptions.mode : mode;
+  }
+
   _render = (props: NavigationTransitionProps): React.Element<*> => {
     const {
       screenProps,
@@ -110,7 +130,7 @@ class CardStackTransitioner extends Component<DefaultProps, Props, void> {
       <CardStack
         screenProps={screenProps}
         headerMode={headerMode}
-        mode={mode}
+        mode={this._getMode()}
         router={router}
         cardStyle={cardStyle}
         transitionConfig={transitionConfig}
